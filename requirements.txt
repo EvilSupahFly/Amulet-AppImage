@@ -1,0 +1,12 @@
+versioneer
+meson-python
+pyopengl
+numpy
+lz4
+wxpython
+amulet-core
+amulet-map-editor
+amulet-leveldb
+amulet-nbt
+minecraft-resource-pack
+six

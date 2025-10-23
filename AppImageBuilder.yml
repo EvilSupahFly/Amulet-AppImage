@@ -1,0 +1,71 @@
+version: 1
+AppDir:
+  path: /home/seann/AppImageBuild/Amulet/AppDir
+  app_info:
+    id: io.github.evilsupahfly.amulet_appimage
+    name: Amulet Minecraft Map Editor
+    icon: io.github.evilsupahfly.amulet_appimage
+    version: 0.10.44.1
+    exec: usr/bin/amulet_map_editor
+    exec_args: $@
+
+  apt:
+    allow_unauthenticated: true
+    sources:
+      - sourceline: deb [trusted=yes] http://archive.ubuntu.com/ubuntu noble main universe multiverse
+      - sourceline: deb [trusted=yes] http://archive.ubuntu.com/ubuntu noble-updates main universe multiverse
+    include:
+      - python3
+      - python3-pip
+      - python3-venv
+      - python3-setuptools
+      - python3-wheel
+      - python3-numpy
+      - libgtk-3-0
+      - libx11-6
+      - libglu1-mesa
+      - libsm6
+      - libxtst6
+      - libxrender1
+      - libxext6
+      - libxcb1
+      - libjpeg8
+      - libpng16-16
+      - liblz4-1
+
+  files:
+    include:
+      - ./AppRun
+      - ./io.github.evilsupahfly.amulet_appimage.desktop
+      - ./io.github.evilsupahfly.amulet_appimage.png
+    exclude:
+      - .git
+      - .github
+      - '*.pyc'
+      - '*.pyo'
+      - '*.egg-info/*'
+      - '__pycache__'
+
+  # --- Custom build script ---
+  script:
+    - echo "Fetching Amulet and wxPython sources..."
+    - mkdir -p sources
+
+    # Install Python dependencies into AppDir
+    - python3 -m pip install --no-cache-dir --prefix=$APPDIR/usr -r requirements.txt
+
+    # Download wxPython binary wheel (Ubuntu 24.04 compatible)
+    - wget -q -O sources/wxpython-4.2.3-cp312-cp312-linux_x86_64.whl https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-24.04/wxpython-4.2.3-cp312-cp312-linux_x86_64.whl
+
+    # Download your custom Amulet Editor build
+    - wget -q -O sources/amulet_map_editor-0.10.44.1.tar.gz https://github.com/EvilSupahFly/Amulet-Map-Editor/releases/download/0.10.44.1/amulet_map_editor-0.10.44.1.tar.gz
+
+    # Install wxPython manually
+    - python3 -m pip install -U --no-cache-dir --prefix=$APPDIR/usr sources/wxpython-4.2.3-cp312-cp312-linux_x86_64.whl
+
+    # Install your custom Amulet tarball
+    - python3 -m pip install -U --no-cache-dir --prefix=$APPDIR/usr sources/amulet_map_editor-0.10.44.1.tar.gz
+
+AppImage:
+  arch: x86_64
+  update-information: guess

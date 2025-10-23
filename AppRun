@@ -1,0 +1,33 @@
+#!/bin/bash
+HERE="$(dirname "$(readlink -f "$0")")"
+
+export PYTHONHOME="$HERE/usr"
+export PYTHONPATH="$HERE/usr/lib/python3.12/site-packages"
+
+# Try to detect if we are in an interactive terminal
+if [ -t 1 ] || [ -n "$PS1" ]; then
+    # Already in a terminal
+    exec "$HERE/usr/bin/python3" -m amulet_map_editor
+else
+    # Not in a terminal — find a terminal emulator
+    for term in gnome-terminal konsole xfce4-terminal lxterminal xterm; do
+        if command -v "$term" >/dev/null 2>&1; then
+            case "$term" in
+                gnome-terminal)
+                    exec gnome-terminal --wait -- bash -c "\"$HERE/usr/bin/python3\" -m amulet_map_editor; read -p 'Press Enter to close...'";;
+                konsole)
+                    exec konsole --noclose -e bash -c "\"$HERE/usr/bin/python3\" -m amulet_map_editor";;
+                xfce4-terminal)
+                    exec xfce4-terminal --disable-server --hold --command="bash -c '\"$HERE/usr/bin/python3\" -m amulet_map_editor'";;
+                lxterminal)
+                    exec lxterminal -e "bash -c '\"$HERE/usr/bin/python3\" -m amulet_map_editor; read -p \"Press Enter to close...\"'";;
+                xterm)
+                    exec xterm -hold -e "bash -c '\"$HERE/usr/bin/python3\" -m amulet_map_editor'";;
+            esac
+            exit
+        fi
+    done
+
+    echo "No supported terminal emulator found."
+    exit 1
+fi

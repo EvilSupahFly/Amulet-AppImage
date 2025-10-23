@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Amulet Minecraft Map Editor
+Comment=A powerful map editing tool for Minecraft worlds
+Categories=Game;KidsGame;
+Icon=io.github.evilsupahfly.amulet_appimage
+Exec=amulet_map_editor
+Terminal=true
+GenericName=A powerful map editor for Minecraft worlds
+Name[en_CA]=io.github.evilsupahfly.amulet_appimage.desktop
+StartupNotify=true
+StartupWMClass=amulet
+MimeType=application/x-amulet-world;
