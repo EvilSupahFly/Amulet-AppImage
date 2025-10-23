@@ -1,7 +1,7 @@
 # Amulet Minecraft Map Editor - AppImage Edition
 My hope, with this project (as was the previous), is to make Amulet easier to install and use for Linux users who aren't used to tinkering with source repositories, or don't have experience with programming, and might not be comfortable attempting to install dependencies and running things from source, or through the terminal, or creating Python virtual environments... Things like that.
 
-<img width="3840" height="1080" alt="Screenshot from 2025-10-22 10-34-42" src="https://github.com/user-attachments/assets/013358ea-2b0a-49d7-9ae1-367b2a827c3d" />
+<img width="3840" height="1080" alt="Screenshot from 2025-10-22 10-34-42" src="https://github.com/user-attachments/assets/fa210be3-de03-4db0-8e63-c76b4c8a1b8b" />
 
 So I present to you, the AppImage version of Amulet! Download it, and double-click it. That's it.
 
